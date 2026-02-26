@@ -1,47 +1,32 @@
+import { toast } from "react-toastify";
 
-import { toast } from 'react-toastify';
+type TipoToast = "sucesso" | "erro" | "info" | "aviso";
 
-export function ToastAlerta(mensagem: string, tipo: string) {
+export function ToastAlerta(
+  mensagem: string,
+  tipo: TipoToast = "info"
+) {
+  const config = {
+    position: "top-right" as const,
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "colored" as const,
+  };
+
   switch (tipo) {
-
-    case 'sucesso':
-      toast.success(mensagem, {
-        position: 'top-right',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        theme: 'colored',
-        progress: undefined,
-      });
+    case "sucesso":
+      toast.success(mensagem, config);
       break;
-
-    case 'erro':
-      toast.error(mensagem, {
-        position: 'top-right',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        theme: 'colored',
-        progress: undefined,
-      });
+    case "erro":
+      toast.error(mensagem, config);
       break;
-
-    case 'info':
+    case "aviso":
+      toast.warn(mensagem, config);
+      break;
     default:
-      toast.info(mensagem, {
-        position: 'top-right',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        theme: 'colored',
-        progress: undefined,
-      });
-      break;
+      toast.info(mensagem, config);
   }
 }

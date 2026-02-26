@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import type Categoria from "../../../models/Categoria";
 
 interface CardCategoriaProps {
@@ -7,32 +7,44 @@ interface CardCategoriaProps {
 
 function CardCategoria({ categoria }: CardCategoriaProps) {
   return (
-    <div className=" border-slate-900 border 
-            flex flex-col rounded-2xl overflow-hidden justify-between">
-      <header className="py-2 px-6 bg-gray-300 text-black font-bold text-2xl">
-        Categoria
+    <div
+      className="bg-white rounded-xl shadow-md border border-gray-100
+                 hover:shadow-lg transition-shadow flex flex-col justify-between"
+    >
+      {/* Cabeçalho */}
+      <header className="px-6 py-4 border-b border-gray-100">
+        <h3 className="text-lg font-semibold text-gray-800">
+          Categoria
+        </h3>
       </header>
-      <p className="p-8 text-3xl bg-slate-100 h-full">{categoria.descricao}</p>
 
-      <div className=" flex ">
+      {/* Conteúdo */}
+      <div className="px-6 py-4 flex-1">
+        <p className="text-gray-600 leading-relaxed">
+          {categoria.descricao}
+        </p>
+      </div>
+
+      {/* Ações */}
+      <div className="flex border-t border-gray-100">
         <Link
           to={`/editarcategoria/${categoria.id}`}
-          className="w-full text-white bg-gray-500
-                    hover:bg-gray-900 flex items-center justify-center py-2"
+          className="w-full text-center py-3 text-green-700 font-medium
+                     hover:bg-green-50 transition-colors"
         >
-          <button>Editar</button>
+          Editar
         </Link>
 
         <Link
           to={`/deletarcategoria/${categoria.id}`}
-          className="'text-white bg-red-400 
-                    hover:bg-red-700 w-full flex items-center justify-center"
+          className="w-full text-center py-3 text-red-600 font-medium
+                     hover:bg-red-50 transition-colors"
         >
-          <button>Deletar</button>
+          Excluir
         </Link>
       </div>
     </div>
-  )
+  );
 }
 
-export default CardCategoria
+export default CardCategoria;

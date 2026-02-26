@@ -1,35 +1,42 @@
-/* eslint-disable no-empty */
+ 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { SyncLoader } from "react-spinners";
+import { SyncLoader } from "react-spinners";
 import type Categoria from "../../../models/Categoria";
 import { buscar } from "../../../services/Service";
+import { ToastAlerta } from "../../../util/ToastAlerta";
 import CardCategoria from "../cardcategoria/CardCategoria";
+import { useLoading } from "../../../context/LoadingContext";
 
 function ListaCategorias() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const { showLoading, hideLoading } = useLoading();
 
   useEffect(() => {
     buscarCategorias();
-  }, [categorias.length]);
+  }, []);
 
   async function buscarCategorias() {
     try {
-      setIsLoading(true);
+      showLoading();
       await buscar("/categorias", setCategorias);
-    } catch (error: any) {
+      // ToastAlerta("Categorias carregadas com sucesso", "info");
+    } catch {
+      ToastAlerta("Erro ao carregar categorias", "erro");
     } finally {
-      setIsLoading(false);
+      hideLoading();
     }
   }
 
   return (
     <>
-      {/* {isLoading && <SyncLoader color="#312e81" size={32} />} */}
+      <div className="flex justify-center w-full my-8">
+        {isLoading && <SyncLoader color="gray" size={16} />}
+      </div>
       <div className="flex justify-center w-full my-4">
         <div className="container flex flex-col">
           {!isLoading && categorias.length === 0 && (
